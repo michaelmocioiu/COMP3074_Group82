@@ -7,7 +7,7 @@ const About = () => {
           <Text style={GlobalStyles.title}>About</Text>
           <Text style={GlobalStyles.title}>Group 82</Text>
           <Text>Michael Mocioiu - 101459108</Text>
-          <Text>Leonid Serebryannikov - Add your id pls</Text>
+          <Text>Leonid Serebryannikov - 101468805</Text>
           <Text>Ivan Zakrevskyi - Add your id pls</Text>
           
         </View> 

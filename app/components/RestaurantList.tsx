@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet, Modal, TouchableOpacity } from "react-native";
+import {View, Text, FlatList, StyleSheet, Modal, TouchableOpacity, Button} from "react-native";
 import { useRouter } from "expo-router";
 
 import { Restaurant } from "../models/Restaurant";
@@ -26,6 +26,7 @@ const List = () => {
           <div style={g_style.row}>
 
           </div>
+            <Button title={"+ Add restaurant"} style={{marginTop: 20}} onPress={() => router.push("./components/AddRestaurantPage")} />
           <FlatList
             data={restaurantsData}
             keyExtractor={(item) => item.id}

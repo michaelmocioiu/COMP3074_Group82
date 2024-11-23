@@ -2,6 +2,7 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
+    "jsx": "react-jsx", // Add this line for React 17+ or use "react" for older versions
     "paths": {
       "@/*": [
         "./*"

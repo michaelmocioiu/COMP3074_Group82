@@ -1,0 +1,93 @@
+[
+    {
+      "id": "1",
+      "name": "Taste of Italy",
+      "address": "123 Main Street, Toronto, ON",
+      "phones": ["+1-416-123-4567"],
+      "description": "A cozy Italian restaurant serving authentic pasta and pizza.",
+      "tags": ["Italian", "Cozy", "Pasta", "Pizza"],
+      "rating": 4.5,
+      "location": {
+        "latitude": 43.6532,
+        "longitude": -79.3832
+      }
+    },
+    {
+      "id": "2",
+      "name": "Gereen Earth Café",
+      "address": "456 Queen Street, Vancouver, BC",
+      "phones": ["+1-604-987-6543"],
+      "description": "A plant-based café with vegan and organic options.",
+      "tags": ["Vegan", "Organic", "Healthy"],
+      "rating": 4.8,
+      "location": {
+        "latitude": 49.2827,
+        "longitude": -123.1207
+      }
+    },
+    {
+      "id": "3",
+      "name": "Spice Paradise",
+      "address": "789 King Street, Calgary, AB",
+      "phones": ["+1-403-555-7890"],
+      "description": "Authentic Indian cuisine with a modern twist.",
+      "tags": ["Indian", "Spicy", "Curry", "Modern"],
+      "rating": 4.3,
+      "location": {
+        "latitude": 51.0447,
+        "longitude": -114.0719
+      }
+    },
+    {
+      "id": "4",
+      "name": "Sushi Delight",
+      "address": "321 Bay Street, Ottawa, ON",
+      "phones": ["+1-613-333-2121"],
+      "description": "Fresh sushi and sashimi prepared with care.",
+      "tags": ["Japanese", "Sushi", "Fresh"],
+      "rating": 4.7,
+      "location": {
+        "latitude": 45.4215,
+        "longitude": -75.6972
+      }
+    },
+    {
+      "id": "5",
+      "name": "The Thai Orchid",
+      "address": "222 Elm Street, Montreal, QC",
+      "phones": ["+1-514-444-5678"],
+      "description": "Traditional Thai dishes served in an elegant setting.",
+      "tags": ["Thai", "Elegant", "Traditional"],
+      "rating": 4.6,
+      "location": {
+        "latitude": 45.5017,
+        "longitude": -73.5673
+      }
+    },
+    {
+        "id": "6",
+        "name": "The Thai Orchid",
+        "address": "222 Elm Street, Montreal, QC",
+        "phones": ["+1-514-444-5678"],
+        "description": "Traditional Thai dishes served in an elegant setting.",
+        "tags": ["Thai", "Elegant", "Traditional"],
+        "rating": 4.6,
+        "location": {
+          "latitude": 45.5017,
+          "longitude": -73.5673
+        }
+      },
+      {
+        "id": "7",
+        "name": "The Thai Orchid",
+        "address": "222 Elm Street, Montreal, QC",
+        "phones": ["+1-514-444-5678"],
+        "description": "Traditional Thai dishes served in an elegant setting.",
+        "tags": ["Thai", "Elegant", "Traditional"],
+        "rating": 4.6,
+        "location": {
+          "latitude": 45.5017,
+          "longitude": -73.5673
+        }
+      }
+  ]

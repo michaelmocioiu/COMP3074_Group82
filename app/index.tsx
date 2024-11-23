@@ -1,4 +1,4 @@
-import List from "./components/List";
+import List from "./components/RestaurantList";
 
 export default function Index() {
   return <List />;

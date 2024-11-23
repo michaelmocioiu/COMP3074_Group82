@@ -16,5 +16,5 @@ const About = () => {
 
 About.options = {
     headerTitle: 'About Us',  // Custom title for About screen
-  };
+};
 export default About;

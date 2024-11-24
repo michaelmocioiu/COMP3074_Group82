@@ -16,16 +16,7 @@ import {
     HelperText,
 } from 'react-native-paper';
 import StarRating from 'react-native-star-rating-widget';
-
-interface Restaurant {
-    name: string;
-    address: string;
-    phones: string[];
-    description: string;
-    tags: string[];
-    rating: number;
-}
-
+import {Restaurant} from "@/app/models/Restaurant";
 const AddRestaurant: React.FC = () => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -75,15 +66,20 @@ const AddRestaurant: React.FC = () => {
     const handleSubmit = () => {
         if (validate()) {
             const newRestaurant: Restaurant = {
+                id: Math.random().toString(36).substr(2, 9),
                 name,
                 address,
                 phones,
                 description,
                 tags,
                 rating,
+                location: {
+                    latitude: 0,
+                    longitude: 0,
+                }
             };
-            // Handle the newRestaurant object as needed
-            // For example, save it to AsyncStorage or pass it to a parent component
+
+            // Add the new restaurant to the list of restaurants
 
             Alert.alert('Success', 'Restaurant added successfully!', [
                 { text: 'OK', onPress: () => clearForm() },

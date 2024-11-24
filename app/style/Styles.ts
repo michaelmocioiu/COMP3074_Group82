@@ -62,13 +62,13 @@ export const GlobalStyles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     alignContent: 'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    margin: 10
   }
   
 })
 
 export const HeaderStyle = StyleSheet.create({
-
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
@@ -84,8 +84,6 @@ export const HeaderStyle = StyleSheet.create({
     fontWeight: "bold",
     color: lights,
   },
-
- 
 });
 
 
@@ -178,11 +176,11 @@ export const DetailsStyles = StyleSheet.create({
   },
   restaurantTag: {
     borderRadius:7,
-    fontSize: 17,
+    fontSize: 15,
     paddingVertical: 5,
     paddingHorizontal:8,
     margin:5,
     backgroundColor: darks,
-    color: lights
+    color: lights,
   },
 });

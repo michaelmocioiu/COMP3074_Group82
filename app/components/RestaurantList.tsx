@@ -24,9 +24,9 @@ const List = () => {
       return (
         <View style={style.container}>
           <div style={g_style.row}>
+            <Button title={"+ Add restaurant"} onPress={() => router.push("./components/AddRestaurantPage")} />
 
           </div>
-            <Button title={"+ Add restaurant"} style={{marginTop: 20}} onPress={() => router.push("./components/AddRestaurantPage")} />
           <FlatList
             data={restaurantsData}
             keyExtractor={(item) => item.id}

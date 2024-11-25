@@ -27,6 +27,7 @@ const List = () => {
         <View style={style.container}>
             <View style={g_style.row}>
                 <Button
+                    color={"#18638c"}
                     title="+ Add restaurant"
                     onPress={() => router.push("./components/AddRestaurantPage")}
                 />

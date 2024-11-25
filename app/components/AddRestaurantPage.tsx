@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
     },
     addButton: {
         marginTop: Platform.OS === 'ios' ? 0 : 8,
-        backgroundColor: '#009bef',
+        backgroundColor: '#18638c',
     },
     chipsContainer: {
         flexDirection: 'row',
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         marginTop: 16,
-        backgroundColor: '#009bef',
+        backgroundColor: '#18638c',
     },
     buttonLabel: {
         color: '#ffffff',

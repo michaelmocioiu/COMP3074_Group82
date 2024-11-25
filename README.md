@@ -22,8 +22,8 @@ This is a React Native app used to store and share information about restaurants
 - [ ] CRUD operations
 
 #### Views
- - [ ] Splash Page
+ - [x] Splash Page
  - [x] Restaurant List  
  - [x] Restaurant Details
  - [x] Restaurant Add/Edit Form
- - [ ] Fullscreen Map view
+ - [x] Fullscreen Map view

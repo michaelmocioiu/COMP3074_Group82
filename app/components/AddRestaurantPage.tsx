@@ -15,7 +15,8 @@ import {
     HelperText,
 } from 'react-native-paper';
 import StarRating from 'react-native-star-rating-widget';
-import {Restaurant} from "@/app/models/Restaurant";
+import { Restaurant } from "@/app/models/Restaurant";
+
 const AddRestaurant: React.FC = () => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -25,7 +26,6 @@ const AddRestaurant: React.FC = () => {
     const [tags, setTags] = useState<string[]>([]);
     const [currentTag, setCurrentTag] = useState('');
     const [rating, setRating] = useState<number>(0);
-
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const validate = (): boolean => {
@@ -63,6 +63,11 @@ const AddRestaurant: React.FC = () => {
 
     const handleSubmit = () => {
         if (validate()) {
+            if (rating < 0 || rating > 5) {
+                Alert.alert('Validation Error', 'Rating must be between 0 and 5.');
+                return;
+            }
+
             const newRestaurant: Restaurant = {
                 id: Math.random().toString(36).substr(2, 9),
                 name,
@@ -70,13 +75,12 @@ const AddRestaurant: React.FC = () => {
                 phones,
                 description,
                 tags,
-                rating,
+                rating: Number(rating.toFixed(1)), // Ensure rating is properly formatted
                 location: {
                     latitude: 0,
                     longitude: 0,
-                }
+                },
             };
-
 
             Alert.alert('Success', 'Restaurant added successfully!', [
                 { text: 'OK', onPress: () => clearForm() },
@@ -203,7 +207,11 @@ const AddRestaurant: React.FC = () => {
                     <Text style={styles.ratingLabel}>Rating:</Text>
                     <StarRating
                         rating={rating}
-                        onChange={setRating}
+                        onChange={(value) => {
+                            const roundedRating = Number(value.toFixed(1));
+                            console.log('Selected Rating:', roundedRating);
+                            setRating(roundedRating);
+                        }}
                         starSize={30}
                         color="#f1c40f"
                     />

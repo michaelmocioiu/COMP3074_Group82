@@ -13,6 +13,6 @@ const Map = () => {
 }
 
 Map.options = {
-    headerTitle: 'About Us',  // Custom title for About screen
+    headerTitle: 'About Us',
 };
 export default Map;

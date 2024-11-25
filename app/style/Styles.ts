@@ -64,7 +64,6 @@ export const GlobalStyles = StyleSheet.create({
     justifyContent: 'center',
     margin: 10,
   },
-  // Added button and buttonText styles
   button: {
     backgroundColor: mid,
     padding: 10,

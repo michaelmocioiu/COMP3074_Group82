@@ -9,7 +9,7 @@ export default function Index() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 3000); // Show splash screen for 3 seconds
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);

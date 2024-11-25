@@ -8,13 +8,13 @@ const About = () => {
           <Text style={GlobalStyles.title}>Group 82</Text>
           <Text>Michael Mocioiu - 101459108</Text>
           <Text>Leonid Serebryannikov - 101468805</Text>
-          <Text>Ivan Zakrevskyi - Add your id pls</Text>
+          <Text>Ivan Zakrevskyi - 101419665</Text>
           
         </View> 
     );
 }
 
 About.options = {
-    headerTitle: 'About Us',  // Custom title for About screen
+    headerTitle: 'About Us',
 };
 export default About;

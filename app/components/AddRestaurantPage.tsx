@@ -1,4 +1,3 @@
-// AddRestaurant.tsx
 import React, { useState } from 'react';
 import {
     View,
@@ -34,7 +33,6 @@ const AddRestaurant: React.FC = () => {
         if (!name.trim()) newErrors.name = 'Restaurant name is required';
         if (!address.trim()) newErrors.address = 'Address is required';
         if (phones.length === 0) newErrors.phones = 'At least one phone number is required';
-        // Additional validations can be added here
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -79,7 +77,6 @@ const AddRestaurant: React.FC = () => {
                 }
             };
 
-            // Add the new restaurant to the list of restaurants
 
             Alert.alert('Success', 'Restaurant added successfully!', [
                 { text: 'OK', onPress: () => clearForm() },
@@ -292,7 +289,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     buttonContent: {
-        height: 48, // Optional: Adjust button height
+        height: 48,
     },
 });
 

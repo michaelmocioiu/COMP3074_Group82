@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { GlobalStyles as g_style, DetailsStyles as style } from "../style/Styles";
 import { View, Text, TouchableOpacity, Modal, Alert } from "react-native";
 // import MapView, { Marker } from "react-native-maps";
 import * as Linking from "expo-linking";
 import * as Location from "expo-location";
-import restaurantsData from "../data/restaurants.json";
+// import restaurantsData from "../data/restaurants.json";
 import { useLocalSearchParams } from "expo-router";
+import { findRestaurant, listRestaurants } from "@/app/utils/HandleRestaurantsCRUD";
 
 type Restaurant = {
   id: string;
@@ -27,10 +28,17 @@ const RestaurantDetails = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [menuVisible, setMenuVisible] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<Location.LocationObjectCoords | null>(null);
-
+  const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
   const toggleMenu = () => setMenuVisible(!menuVisible);
 
-  const restaurant = restaurantsData.find((item: Restaurant) => item.id === id);
+
+  useEffect(() => {
+    findRestaurant(id).then((restaurantResponse) => {
+      setRestaurant(restaurantResponse);
+    });
+  }, []);
+
+
 
   if (!restaurant) {
     return (

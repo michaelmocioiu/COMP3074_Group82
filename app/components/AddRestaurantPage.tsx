@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+// AddRestaurantPage.tsx
+
+import React, { useState, useEffect } from 'react';
 import {
     View,
     StyleSheet,
@@ -16,6 +18,8 @@ import {
 } from 'react-native-paper';
 import StarRating from 'react-native-star-rating-widget';
 import { Restaurant } from "@/app/models/Restaurant";
+import { addRestaurant, initializeRestaurants, listRestaurants } from "@/app/utils/HandleRestaurantsCRUD";
+import { useRouter } from "expo-router";
 
 const AddRestaurant: React.FC = () => {
     const [name, setName] = useState('');
@@ -27,6 +31,20 @@ const AddRestaurant: React.FC = () => {
     const [currentTag, setCurrentTag] = useState('');
     const [rating, setRating] = useState<number>(0);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+    const router = useRouter();
+
+
+    useEffect(() => {
+        // Initialize restaurants list on component mount
+        const initialize = async () => {
+            const existingRestaurants = await listRestaurants();
+            if (!existingRestaurants) {
+                await initializeRestaurants();
+            }
+        };
+        initialize();
+    }, []);
 
     const validate = (): boolean => {
         const newErrors: { [key: string]: string } = {};
@@ -61,7 +79,7 @@ const AddRestaurant: React.FC = () => {
         setTags(tags.filter((tag) => tag !== tagToRemove));
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (validate()) {
             if (rating < 0 || rating > 5) {
                 Alert.alert('Validation Error', 'Rating must be between 0 and 5.');
@@ -82,9 +100,15 @@ const AddRestaurant: React.FC = () => {
                 },
             };
 
-            Alert.alert('Success', 'Restaurant added successfully!', [
-                { text: 'OK', onPress: () => clearForm() },
-            ]);
+            try {
+                await addRestaurant(newRestaurant);
+                Alert.alert('Success', 'Restaurant added successfully!', [
+                    { text: 'OK', onPress: () => clearForm() },
+                ]);
+                router.push('/');
+            } catch (error) {
+                Alert.alert('Error', 'Failed to add restaurant. Please try again.');
+            }
         } else {
             Alert.alert('Validation Error', 'Please fix the errors before submitting.');
         }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "expo-router";
 import { GlobalStyles as g_style, DetailsStyles as style } from "../style/Styles";
 import { View, Text, TouchableOpacity, Modal, Alert } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+// import MapView, { Marker } from "react-native-maps";
 import * as Linking from "expo-linking";
 import * as Location from "expo-location";
 import restaurantsData from "../data/restaurants.json";
@@ -91,23 +91,23 @@ const RestaurantDetails = () => {
 
       <Text style={style.restaurantAddress}>{restaurant.address}</Text>
 
-      <MapView
-        style={style.mapView}
-        initialRegion={{
-          latitude: restaurant.location.latitude,
-          longitude: restaurant.location.longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
-      >
-        <Marker
-          coordinate={{
-            latitude: restaurant.location.latitude,
-            longitude: restaurant.location.longitude,
-          }}
-          title={restaurant.name}
-        />
-      </MapView>
+      {/*<MapView*/}
+      {/*  style={style.mapView}*/}
+      {/*  initialRegion={{*/}
+      {/*    latitude: restaurant.location.latitude,*/}
+      {/*    longitude: restaurant.location.longitude,*/}
+      {/*    latitudeDelta: 0.01,*/}
+      {/*    longitudeDelta: 0.01,*/}
+      {/*  }}*/}
+      {/*>*/}
+      {/*  <Marker*/}
+      {/*    coordinate={{*/}
+      {/*      latitude: restaurant.location.latitude,*/}
+      {/*      longitude: restaurant.location.longitude,*/}
+      {/*    }}*/}
+      {/*    title={restaurant.name}*/}
+      {/*  />*/}
+      {/*</MapView>*/}
 
       <TouchableOpacity onPress={getDirections} style={g_style.button}>
         <Text style={g_style.buttonText}>Get Directions</Text>

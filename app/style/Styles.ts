@@ -195,4 +195,27 @@ export const DetailsStyles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 10,
   },
+
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 16,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+  },
 });

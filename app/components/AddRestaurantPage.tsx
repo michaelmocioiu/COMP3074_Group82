@@ -1,4 +1,3 @@
-// AddRestaurantPage.tsx
 
 import React, { useState, useEffect } from 'react';
 import {
@@ -18,8 +17,15 @@ import {
 } from 'react-native-paper';
 import StarRating from 'react-native-star-rating-widget';
 import { Restaurant } from "@/app/models/Restaurant";
-import { addRestaurant, initializeRestaurants, listRestaurants } from "@/app/utils/HandleRestaurantsCRUD";
-import { useRouter } from "expo-router";
+import {
+    addRestaurant,
+    initializeRestaurants,
+    listRestaurants,
+    findRestaurant,
+    updateRestaurant
+} from "@/app/utils/HandleRestaurantsCRUD";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import * as Location from 'expo-location';
 
 const AddRestaurant: React.FC = () => {
     const [name, setName] = useState('');
@@ -31,12 +37,14 @@ const AddRestaurant: React.FC = () => {
     const [currentTag, setCurrentTag] = useState('');
     const [rating, setRating] = useState<number>(0);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [loading, setLoading] = useState<boolean>(false);
+    const [geocoding, setGeocoding] = useState<boolean>(false);
 
     const router = useRouter();
-
+    const params = useLocalSearchParams();
+    const restaurantId = params.id as string | undefined;
 
     useEffect(() => {
-        // Initialize restaurants list on component mount
         const initialize = async () => {
             const existingRestaurants = await listRestaurants();
             if (!existingRestaurants) {
@@ -45,6 +53,34 @@ const AddRestaurant: React.FC = () => {
         };
         initialize();
     }, []);
+
+    useEffect(() => {
+        const fetchRestaurant = async () => {
+            if (restaurantId) {
+                try {
+                    setLoading(true);
+                    const restaurant = await findRestaurant(restaurantId);
+                    if (restaurant) {
+                        setName(restaurant.name);
+                        setAddress(restaurant.address);
+                        setPhones(restaurant.phones);
+                        setDescription(restaurant.description);
+                        setTags(restaurant.tags);
+                        setRating(restaurant.rating);
+                    } else {
+                        Alert.alert('Error', 'Restaurant not found.');
+                        router.push('/');
+                    }
+                } catch (error) {
+                    console.error('Error fetching restaurant:', error);
+                    Alert.alert('Error', 'Failed to load restaurant data.');
+                } finally {
+                    setLoading(false);
+                }
+            }
+        };
+        fetchRestaurant();
+    }, [restaurantId]);
 
     const validate = (): boolean => {
         const newErrors: { [key: string]: string } = {};
@@ -86,28 +122,57 @@ const AddRestaurant: React.FC = () => {
                 return;
             }
 
-            const newRestaurant: Restaurant = {
-                id: Math.random().toString(36).substr(2, 9),
-                name,
-                address,
-                phones,
-                description,
-                tags,
-                rating: Number(rating.toFixed(1)), // Ensure rating is properly formatted
-                location: {
-                    latitude: 0,
-                    longitude: 0,
-                },
-            };
+            setGeocoding(true);
 
             try {
-                await addRestaurant(newRestaurant);
-                Alert.alert('Success', 'Restaurant added successfully!', [
-                    { text: 'OK', onPress: () => clearForm() },
-                ]);
+                let { status } = await Location.requestForegroundPermissionsAsync();
+                if (status !== 'granted') {
+                    Alert.alert('Permission Denied', 'Permission to access location was denied.');
+                    setGeocoding(false);
+                    return;
+                }
+
+                const geocodeResults = await Location.geocodeAsync(address);
+                if (geocodeResults.length === 0) {
+                    Alert.alert('Geocoding Error', 'Unable to find coordinates for the provided address.');
+                    setGeocoding(false);
+                    return;
+                }
+
+                const { latitude, longitude } = geocodeResults[0];
+
+                const newRestaurant: Restaurant = {
+                    id: restaurantId || Math.random().toString(36).substr(2, 9),
+                    name,
+                    address,
+                    phones,
+                    description,
+                    tags,
+                    rating: Number(rating.toFixed(1)),
+                    location: {
+                        latitude,
+                        longitude,
+                    },
+                };
+
+                if (restaurantId) {
+                    await updateRestaurant(newRestaurant);
+                    Alert.alert('Success', 'Restaurant updated successfully!', [
+                        { text: 'OK', onPress: () => router.push('/') },
+                    ]);
+                } else {
+                    await addRestaurant(newRestaurant);
+                    Alert.alert('Success', 'Restaurant added successfully!', [
+                        { text: 'OK', onPress: () => clearForm() },
+                    ]);
+                }
+
                 router.push('/');
             } catch (error) {
-                Alert.alert('Error', 'Failed to add restaurant. Please try again.');
+                console.error('Error submitting restaurant:', error);
+                Alert.alert('Error', 'Failed to submit restaurant. Please try again.');
+            } finally {
+                setGeocoding(false);
             }
         } else {
             Alert.alert('Validation Error', 'Please fix the errors before submitting.');
@@ -132,7 +197,9 @@ const AddRestaurant: React.FC = () => {
             style={styles.container}
         >
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Text style={styles.title}>Add a New Restaurant</Text>
+                <Text style={styles.title}>
+                    {restaurantId ? 'Update Restaurant' : 'Add a New Restaurant'}
+                </Text>
 
                 <TextInput
                     label="Name"
@@ -247,8 +314,11 @@ const AddRestaurant: React.FC = () => {
                     style={styles.submitButton}
                     labelStyle={styles.buttonLabel}
                     contentStyle={styles.buttonContent}
+                    disabled={loading || geocoding}
                 >
-                    Add Restaurant
+                    {geocoding
+                        ? 'Processing...'
+                        : restaurantId ? 'Update Restaurant' : 'Add Restaurant'}
                 </Button>
             </ScrollView>
         </KeyboardAvoidingView>

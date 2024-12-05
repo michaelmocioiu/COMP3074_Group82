@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 import { GlobalStyles as g_style, DetailsStyles as style } from "../style/Styles";
 import { View, Text, TouchableOpacity, Modal, Alert } from "react-native";
-// import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import * as Linking from "expo-linking";
 import * as Location from "expo-location";
 // import restaurantsData from "../data/restaurants.json";
 import { useLocalSearchParams } from "expo-router";
-import { findRestaurant, listRestaurants } from "@/app/utils/HandleRestaurantsCRUD";
+import {deleteRestaurant, findRestaurant, listRestaurants} from "@/app/utils/HandleRestaurantsCRUD";
 
 type Restaurant = {
   id: string;
@@ -86,6 +86,27 @@ const RestaurantDetails = () => {
     Linking.openURL(url);
   };
 
+  const handleDelete = async () => {
+    Alert.alert(
+      "Delete Restaurant",
+      `Are you sure you want to delete ${restaurant.name}?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: async () => {
+            console.log("Deleting restaurant:", restaurant.name);
+            await deleteRestaurant(restaurant.id);
+            router.push("/");
+          },
+        },
+      ]
+    );
+  }
+
   return (
     <View style={g_style.container}>
       <View style={style.row}>
@@ -99,23 +120,23 @@ const RestaurantDetails = () => {
 
       <Text style={style.restaurantAddress}>{restaurant.address}</Text>
 
-      {/*<MapView*/}
-      {/*  style={style.mapView}*/}
-      {/*  initialRegion={{*/}
-      {/*    latitude: restaurant.location.latitude,*/}
-      {/*    longitude: restaurant.location.longitude,*/}
-      {/*    latitudeDelta: 0.01,*/}
-      {/*    longitudeDelta: 0.01,*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <Marker*/}
-      {/*    coordinate={{*/}
-      {/*      latitude: restaurant.location.latitude,*/}
-      {/*      longitude: restaurant.location.longitude,*/}
-      {/*    }}*/}
-      {/*    title={restaurant.name}*/}
-      {/*  />*/}
-      {/*</MapView>*/}
+      <MapView
+        style={style.mapView}
+        initialRegion={{
+          latitude: restaurant.location.latitude,
+          longitude: restaurant.location.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        }}
+      >
+        <Marker
+          coordinate={{
+            latitude: restaurant.location.latitude,
+            longitude: restaurant.location.longitude,
+          }}
+          title={restaurant.name}
+        />
+      </MapView>
 
       <TouchableOpacity onPress={getDirections} style={g_style.button}>
         <Text style={g_style.buttonText}>Get Directions</Text>
@@ -153,7 +174,7 @@ const RestaurantDetails = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={g_style.dotmenuItem}
-              onPress={() => console.log("Route: Edit")}
+              onPress={() => router.push('/components/AddRestaurantPage?id=' + id)}
             >
               <Text style={g_style.menuText}>Edit</Text>
             </TouchableOpacity>
@@ -165,7 +186,7 @@ const RestaurantDetails = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={g_style.dotmenuItem}
-              onPress={() => console.log("Delete")}
+              onPress={() => handleDelete()}
             >
               <Text style={g_style.menuText}>Delete</Text>
             </TouchableOpacity>

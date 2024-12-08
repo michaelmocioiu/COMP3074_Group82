@@ -1,4 +1,3 @@
-// RestaurantList.tsx
 import React, { useState, useEffect, FC } from "react";
 import {
     View,
@@ -27,12 +26,10 @@ const List: FC<ListProps> = () => {
     const [refreshing, setRefreshing] = useState<boolean>(false);
     const [searchQuery, setSearchQuery] = useState<string>("");
 
-    // Fetch restaurants when the component mounts
     useEffect(() => {
         fetchRestaurants();
     }, []);
 
-    // Update filtered data whenever restaurantsData or searchQuery changes
     useEffect(() => {
         if (searchQuery.trim() === "") {
             setFilteredData(restaurantsData);
@@ -55,7 +52,7 @@ const List: FC<ListProps> = () => {
             if (data == null) {
                 await initializeRestaurants();
                 fetchRestaurants();
-                return; // Prevent setting state before data is fetched again
+                return;
             }
             console.log("Restaurants data:", data);
             setRestaurantsData(data);
